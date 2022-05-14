@@ -1,0 +1,10 @@
+name: MCLandsVanishSystem
+author: elNino0916
+version: 1.0
+main: eu.elnino.main.MCLandsVanishSystem
+
+
+commands:
+  vanish:
+    aliases:
+      - v

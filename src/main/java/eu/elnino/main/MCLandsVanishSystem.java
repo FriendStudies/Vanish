@@ -1,6 +1,7 @@
 package eu.elnino.main;
 import eu.elnino.commands.*;
-import eu.elnino.listener.PlayerListener;
+import eu.elnino.util.AdvancedLicense;
+import eu.elnino.util.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import sun.security.provider.Sun;
@@ -15,6 +16,11 @@ public class MCLandsVanishSystem extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        Config.setDefaults();
+
+        if(!new AdvancedLicense(Config.getString("LicenseSystem.License"), "http://45.142.114.159/license/verify.php", this).register()) return;
+
         register();
         instance = this;
 

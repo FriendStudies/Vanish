@@ -28,7 +28,7 @@ public class VanishCommand implements CommandExecutor {
 
         if (MCLandsVanishSystem.vanishedPlayers.contains(player.getName())){
 
-            player.sendMessage("// UNVANISHED NACHRICHT");
+            player.sendMessage("§4§lDu bist nicht mehr im Vanish.");
 
             MCLandsVanishSystem.vanishedPlayers.remove(player.getName());
 
@@ -38,7 +38,7 @@ public class VanishCommand implements CommandExecutor {
 
         } else {
 
-            player.sendMessage("// VANISH NACHRICHT");
+            player.sendMessage("§4§lDu bist im Vanish.");
 
             MCLandsVanishSystem.vanishedPlayers.add(player.getName());
 
