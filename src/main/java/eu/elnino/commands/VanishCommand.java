@@ -13,7 +13,7 @@ public class VanishCommand implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
 
         if (commandSender instanceof ConsoleCommandSender){
-            commandSender.sendMessage("§cDas können nur Spieler.");
+            commandSender.sendMessage("§cDas können nur Spieler ausführen. Wie soll die Konsole verschwinden?");
             return true;
         }
 
@@ -26,24 +26,89 @@ public class VanishCommand implements CommandExecutor {
             return true;
         }
 
-        if (MCLandsVanishSystem.vanishedPlayers.contains(player.getName())){
+        if (args.length == 1) {
 
-            player.sendMessage("§4§lDu bist nicht mehr im Vanish.");
+            Player target = (Player) Bukkit.getPlayer(args[0]);
 
-            MCLandsVanishSystem.vanishedPlayers.remove(player.getName());
+            if (MCLandsVanishSystem.vanishedPlayers.contains(target.getName())) {
 
-            for (Player onlinePlayers : Bukkit.getOnlinePlayers()){
-                onlinePlayers.showPlayer(player);
+                target.sendMessage("§7Du bist nun nicht mehr im Vanish§8.");
+                player.sendMessage("§7Der Spieler §9" + target.getName() + " §7ist nun nicht mehr im Vanish§8.");
+
+                for (Player perm : Bukkit.getOnlinePlayers()) {
+                    if (perm.hasPermission("mclands.vanish.notify")) {
+                        if (perm.getName() != player.getName()) {
+                            perm.sendMessage("§7Der Spieler §9" + target.getName() + " §7ist nun nicht mehr im Vanish.");
+                        }
+                    }
+                }
+
+                MCLandsVanishSystem.vanishedPlayers.remove(target.getName());
+
+                for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
+                    onlinePlayers.showPlayer(target);
+                }
+
+            } else {
+
+                target.sendMessage("§7Du bist nun im Vanish.");
+                player.sendMessage("§7Der Spieler §9" + target.getName() + " §7ist nun im Vanish§8.");
+
+                for (Player perm : Bukkit.getOnlinePlayers()) {
+                    if (perm.hasPermission("mclands.vanish.notify")) {
+                        if (perm.getName() != player.getName()) {
+                            perm.sendMessage("§7Der Spieler §9" + target.getName() + " §7ist nun im Vanish.");
+                        }
+                    }
+                }
+
+                MCLandsVanishSystem.vanishedPlayers.add(target.getName());
+
+                for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
+                    if (!onlinePlayers.hasPermission("mclands.vanish.show")) {
+                        onlinePlayers.hidePlayer(target);
+                    }
+                }
             }
 
         } else {
+            if (MCLandsVanishSystem.vanishedPlayers.contains(player.getName())) {
 
-            player.sendMessage("§4§lDu bist im Vanish.");
+                player.sendMessage("§7Du bist nun nicht mehr im Vanish.");
 
-            MCLandsVanishSystem.vanishedPlayers.add(player.getName());
+                for (Player perm : Bukkit.getOnlinePlayers()) {
+                    if (perm.hasPermission("mclands.vanish.notify")) {
+                        if (perm.getName() != player.getName()) {
+                            perm.sendMessage("§7Der Spieler §9" + player.getName() + " §7ist nun nicht mehr im Vanish.");
+                        }
+                    }
+                }
 
-            for (Player onlinePlayers : Bukkit.getOnlinePlayers()){
-                onlinePlayers.hidePlayer(player);
+                MCLandsVanishSystem.vanishedPlayers.remove(player.getName());
+
+                for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
+                    onlinePlayers.showPlayer(player);
+                }
+
+            } else {
+
+                player.sendMessage("§7Du bist nun im Vanish.");
+
+                for (Player perm : Bukkit.getOnlinePlayers()) {
+                    if (perm.hasPermission("mclands.vanish.notify")) {
+                        if (perm.getName() != player.getName()) {
+                            perm.sendMessage("§7Der Spieler §9" + player.getName() + " §7ist nun im Vanish.");
+                        }
+                    }
+                }
+
+                MCLandsVanishSystem.vanishedPlayers.add(player.getName());
+
+                for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
+                    if (!onlinePlayers.hasPermission("mclands.vanish.show")) {
+                        onlinePlayers.hidePlayer(player);
+                    }
+                }
             }
         }
 

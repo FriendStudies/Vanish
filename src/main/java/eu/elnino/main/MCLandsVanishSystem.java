@@ -1,5 +1,6 @@
 package eu.elnino.main;
 import eu.elnino.commands.*;
+import eu.elnino.listener.PlayerListener;
 import eu.elnino.util.AdvancedLicense;
 import eu.elnino.util.Config;
 import org.bukkit.Bukkit;
@@ -33,12 +34,14 @@ public class MCLandsVanishSystem extends JavaPlugin {
 
     @Override
     public void onDisable(){
-        Bukkit.getConsoleSender().sendMessage("Das Plugin wird deaktiviert.");
-        Bukkit.getConsoleSender().sendMessage("Sucess");
+        Bukkit.getConsoleSender().sendMessage("Das Plugin wurde deaktiviert.");
+        Bukkit.getConsoleSender().sendMessage("Auf Wiedersehen!");
     }
 
     public void register() {
         getCommand("vanish").setExecutor(new VanishCommand());
+
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
     }
 
 }
