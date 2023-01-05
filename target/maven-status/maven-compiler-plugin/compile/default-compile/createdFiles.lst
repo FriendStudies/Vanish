@@ -1,7 +1,3 @@
+eu\elnino\listener\PlayerListener.class
 eu\elnino\commands\VanishCommand.class
 eu\elnino\main\MCLandsVanishSystem.class
-eu\elnino\util\AdvancedLicense$ValidationType.class
-eu\elnino\util\Config.class
-eu\elnino\listener\PlayerListener.class
-eu\elnino\util\AdvancedLicense.class
-eu\elnino\util\AdvancedLicense$LogType.class
